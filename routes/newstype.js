@@ -5,13 +5,14 @@ var http = require('http');
 
 var findtypes = {};
 
-router.get('/api/mnProclamation/findTypes', function(req, res) {
+router.get('/', function(req, res) {
     queryfindtypes();
     if(findtypes.code) {
         res.send(findtypes);
     } else {
         queryfindtypes();
     }
+    res.send(findtypes);
 });
 
 function queryfindtypes() {

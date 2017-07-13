@@ -5,9 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var newslist = require('./app/newslist');
-var newsdetail = require('./app/newsdetail');
-var newstype = require('./app/newstype');
+var newslist = require('./routes/newslist');
+var newsdetail = require('./routes/newsdetail');
+var newstype = require('./routes/newstype');
 
 var app = express();
 
@@ -24,9 +24,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/mnProclamation/list', newslist);
-app.use('/api/mnProclamation/view', newsdetail);
-app.use('/api/mnProclamation/findTypes', newstype);
+app.use("/api/mnProclamation/list", newslist);
+app.use("/api/mnProclamation/view", newsdetail);
+app.use("/api/mnProclamation/findTypes", newstype);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -46,4 +46,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+app.listen('3000', function() {
+    console.log("server is running.");
+});
