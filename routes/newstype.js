@@ -12,13 +12,15 @@ router.get('/', function(req, res) {
     } else {
         queryfindtypes();
     }
-    res.send(findtypes);
 });
 
 function queryfindtypes() {
     var options = {
         host: config.get("host") + config.get("_newstype"),
         port: config.get("port"),
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
         method: 'GET'
     }
 
