@@ -4,17 +4,17 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var config = require('config-lite')(__dirname);
+var pkg = require('./package');
 
-var newslist = require('./routes/newslist');
-var newsdetail = require('./routes/newsdetail');
-var newstype = require('./routes/newstype');
+var index = require('./routes/index');
+var users = require('./routes/users');
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-// app.use('/views', express.static('../views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -24,9 +24,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use("/api/mnProclamation/list", newslist);
-app.use("/api/mnProclamation/view", newsdetail);
-app.use("/api/mnProclamation/findTypes", newstype);
+app.use('/', index);
+app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -46,6 +45,10 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen('3000', function() {
-    console.log("server is running.");
-});
+if(module.parent) {
+  module.exports = app;
+} else {
+  app.listen(config.port, function() {
+    console.log(`${pkg.name} listening on port ${config.port}`);
+  });
+}
