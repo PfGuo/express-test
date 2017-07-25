@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var config = require('config-lite')(__dirname);
 var pkg = require('./package');
+var session = require('express-session');
+var flash = require('connect-flash');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
